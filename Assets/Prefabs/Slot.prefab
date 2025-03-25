@@ -212,10 +212,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
-  button: {fileID: 0}
+  button: {fileID: 8240331654658842157}
   icon: {fileID: 0}
   quantityText: {fileID: 0}
-  equipImage: {fileID: 0}
+  equipImage: {fileID: 4381181478748025789}
+  index: 0
+  equipped: 0
+  quantity: 0
 --- !u!1 &6524502674932790027
 GameObject:
   m_ObjectHideFlags: 0

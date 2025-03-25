@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -64,14 +65,7 @@ public class UIManager : MonoBehaviour
 
         mainMenu.OnMainMenuReturn();
 
-        SetData();
     }
 
-    public void SetData()
-    {
-        Character player = new Character(PlayerClass.SPARTASTUDENT ,"코딩의 노예", 100, 5, 3, 3, 30, 10);
-
-        status.SetCharacterInfo(player);
-    }
 
 }

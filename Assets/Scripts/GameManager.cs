@@ -32,4 +32,16 @@ public class GameManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
     }
+
+    private void Start()
+    {
+        SetData();
+    }
+
+    public void SetData()
+    {
+        Character player = new Character(PlayerClass.SPARTASTUDENT, "코딩의 노예", 100, 5, 3, 3, 30, 10);
+
+        UIManager.Instance.status.SetCharacterInfo(player);
+    }
 }
