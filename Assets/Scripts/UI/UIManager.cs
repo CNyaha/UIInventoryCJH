@@ -48,7 +48,6 @@ public class UIManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-        
     }
 
     private void Start()
@@ -64,13 +63,15 @@ public class UIManager : MonoBehaviour
         }
 
         mainMenu.OnMainMenuReturn();
+
+        SetData();
     }
 
     public void SetData()
     {
-        Character player = new Character(PlayerClass.SPARTASTUDENT ,"수강생", 100, 5, 3, 3, 30, 10);
+        Character player = new Character(PlayerClass.SPARTASTUDENT ,"코딩의 노예", 100, 5, 3, 3, 30, 10);
 
-        
+        status.SetCharacterInfo(player);
     }
 
 }
