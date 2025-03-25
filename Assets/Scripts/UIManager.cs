@@ -20,7 +20,6 @@ public class UIManager : MonoBehaviour
             }
             return instance;
         }
-        private set { }
     }
 
     [SerializeField]
@@ -38,26 +37,38 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
 
-            mainMenu = uiMainMenu;
-            status = uiStatus;
-            inventory = uiInventory;
-        }
-        else
+
+        if (Instance != null && instance != this)
         {
             Destroy(gameObject);
+            return;
         }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
 
         
     }
 
+    private void Start()
+    {
+        mainMenu = uiMainMenu;
+        status = uiStatus;
+        inventory = uiInventory;
+
+        if (mainMenu == null || status == null || inventory == null)
+        {
+            Debug.LogError("UI들이 등록되지 않았습니다.");
+            return;
+        }
+
+        mainMenu.OnMainMenuReturn();
+    }
+
     public void SetData()
     {
-        Character player = new Character("수강생", 100, 5, 3, 3);
+        Character player = new Character(PlayerClass.SPARTASTUDENT ,"수강생", 100, 5, 3, 3, 30, 10);
 
         
     }

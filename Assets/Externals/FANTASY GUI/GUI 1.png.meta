@@ -433,10 +433,10 @@ TextureImporter:
       name: GUI 1_14
       rect:
         serializedVersion: 2
-        x: 378
-        y: 570
-        width: 356
-        height: 112
+        x: 381
+        y: 579
+        width: 350
+        height: 103
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
