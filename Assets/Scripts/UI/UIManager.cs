@@ -49,10 +49,6 @@ public class UIManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-    }
-
-    private void Start()
-    {
         mainMenu = uiMainMenu;
         status = uiStatus;
         inventory = uiInventory;
@@ -64,6 +60,12 @@ public class UIManager : MonoBehaviour
         }
 
         mainMenu.OnMainMenuReturn();
+
+    }
+
+    private void Start()
+    {
+
 
     }
 

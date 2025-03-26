@@ -26,6 +26,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         icon = transform.Find("Icon").GetComponent<Image>();
         quantityText = transform.Find("QuantityText").GetComponent<TextMeshProUGUI>();
         equipImage = transform.Find("EquipImage").GetComponent<Image>();
+
+        button.onClick.AddListener(OnItemUseImage);
     }
 
     private void Start()
@@ -37,7 +39,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void Set()
     {
-        icon = item.icon;
+        icon.sprite = item.icon;
 
         if (quantity > 1)
         {
@@ -73,6 +75,29 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void ActivateSlot()
     {
         gameObject.SetActive(true);
+    }
+
+    public void OnItemUseImage()
+    {
+        if (item == null) return;
+        Vector2 mousePos = Input.mousePosition;
+        
+
+        if (mousePos.x + 100 > Screen.width)
+        {
+            mousePos.x -= 60;
+        }
+        else
+        {
+            mousePos.x += 60;
+        }
+
+        inventory.itemSlotClickImage.transform.position = mousePos;
+        inventory.itemSlotClickImage.SetActive(!inventory.itemSlotClickImage.activeSelf);
+
+        inventory.selectItem = this;
+        inventory.SelectItem(index);
+
     }
 
     public void OnPointerEnter(PointerEventData eventData)

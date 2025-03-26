@@ -27,6 +27,11 @@ public class UIInventory : MonoBehaviour
     public GameObject dropButton;
     public GameObject itemSlotClickImage;
 
+    [Header("Item Pool")]
+    public List<Item> equipmentItemPool;
+    public GameObject randomEquipItemButton;
+
+
     private void Awake()
     {
         InitInventoryUI();
@@ -41,11 +46,12 @@ public class UIInventory : MonoBehaviour
         //selectItemStatName = transform.Find("InfoBG/StatName").GetComponent<TextMeshProUGUI>();
         //selectItemStatValue = transform.Find("InfoBG/StatValue").GetComponent<TextMeshProUGUI>();
 
-        slotPanel = transform.Find("Image/Scroll View/Viewport/Content/Slots");
+        slotPanel = transform.Find("Image/Scroll View/Viewport/Slots").transform;
         itemSlotClickImage = transform.Find("ItemSlotClickImage").gameObject;
 
 
 
+        randomEquipItemButton = transform.Find("RandomWeaponButton").gameObject;
         useButton = transform.Find("ItemSlotClickImage/UseButton").gameObject;
         equipButton = transform.Find("ItemSlotClickImage/EquipButton").gameObject;
         unEquipButton = transform.Find("ItemSlotClickImage/UnEquipButton").gameObject;
@@ -55,6 +61,8 @@ public class UIInventory : MonoBehaviour
         //dropButton.GetComponent<Button>().onClick.AddListener(OnDropButton);
         equipButton.GetComponent<Button>().onClick.AddListener(OnEquipButton);
         unEquipButton.GetComponent<Button>().onClick.AddListener(OnUnEquipButton);
+        randomEquipItemButton.GetComponent<Button>().onClick.AddListener(OnRandomEquipAquireButton);
+
 
         ClearSelectItemWindow();
 
@@ -88,6 +96,7 @@ public class UIInventory : MonoBehaviour
             }
 
         }
+        
 
     }
 
@@ -114,36 +123,46 @@ public class UIInventory : MonoBehaviour
     {
         // 같은 아이템 타입인지 확인 후 같다면 해당 아이템을 착용하고 기존에 있던 아이템의 장착을 해제
 
-        int saveSelectItemIndex = selectItem.index;
 
         selectItem.equipped = true;
+        selectItem.equipImage.gameObject.SetActive(true);
+        GameManager.Instance.player.Equip(selectItem);
 
-        selectItem.index = saveSelectItemIndex;
-
-        RemoveSelectItem();
-
-        itemSlotClickImage.SetActive(false);
         UpdateUI();
+        itemSlotClickImage.SetActive(false);
 
     }
 
     public void OnUnEquipButton()
     {
         UnEquip();
+        UpdateUI();
         itemSlotClickImage.SetActive(false);
+    }
+
+    public void OnRandomEquipAquireButton()
+    {
+        if (equipmentItemPool.Count > 0)
+        {
+            int random = Random.Range(0, equipmentItemPool.Count);
+            Item selectedItemData = equipmentItemPool[random];
+            Item newItem = new Item(selectedItemData.itemName, selectedItemData.itemDescription, selectedItemData.icon, selectedItemData.type, selectedItemData.canStack
+                , selectedItemData.maxStackAmount, selectedItemData.consumables, selectedItemData.itemEquipData);
+
+            AddItem(newItem, 1);
+            UpdateUI();
+        }
     }
 
     void UnEquip()
     {
         selectItem.equipped = false;
-        Slot emptySlot = GetEmptySlot();
+        selectItem.equipImage.gameObject.SetActive(false);
+        GameManager.Instance.player.UnEquip(selectItem);
 
-        if (emptySlot != null)
-        {
-            UpdateUI();
-        }
-
+        UpdateUI();
     }
+
 
     public Slot GetEmptySlot()
     {
@@ -160,6 +179,7 @@ public class UIInventory : MonoBehaviour
             GameObject slotObj = Instantiate(slotPrefab, slotPanel);
             Slot newSlot = slotObj.GetComponent<Slot>();
             newSlot.ActivateSlot();
+            newSlot.index = slots.Count;
             slots.Add(newSlot);
             return newSlot;
         }
