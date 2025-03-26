@@ -101,7 +101,7 @@ public class Character
                     UnEquip(UIManager.Instance.inventory.slots[helmetIndex]);
                 }
                 isHelmetEquip = true;
-                weaponIndex = slot.index;
+                helmetIndex = slot.index;
                 break;
         }
     }
