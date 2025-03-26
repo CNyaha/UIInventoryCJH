@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Slot : MonoBehaviour
 {
     public Item item;
     public UIInventory inventory;
@@ -37,6 +37,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         quantityText.gameObject.SetActive(false);
     }
 
+    // 아이템 아이콘과 갯수 세팅
     public void Set()
     {
         icon.sprite = item.icon;
@@ -62,6 +63,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         
     }
 
+    // 아이템 슬롯 비우기
     public void Clear()
     {
         item = null;
@@ -72,11 +74,14 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         equipImage.gameObject.SetActive(false);
     }
 
+    // 슬롯 활성화
     public void ActivateSlot()
     {
         gameObject.SetActive(true);
     }
 
+    // 슬롯을 클릭했을 때 나오는 이미지(사용 or 장착 or 장착해제 , 버리기)
+    // 만약 화면을 벗어난다면 마우스 왼쪽방향에 나오게 설정
     public void OnItemUseImage()
     {
         if (item == null) return;
@@ -100,13 +105,4 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-
-    }
 }

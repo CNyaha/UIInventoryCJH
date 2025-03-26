@@ -14,19 +14,17 @@ public class UIInventory : MonoBehaviour
     public Transform slotPanel; // 슬롯들을 배치할 위치
     public List<Slot> slots;    // 슬롯들을 넣을 리스트
 
+    // 선택한 아이템 정보들 및 버튼
     [Header("Select Item")]
     public Slot selectItem;
     public Image selectItemIcon;
-    //public TextMeshProUGUI selectItemName;
-    //public TextMeshProUGUI selectItemDescription;
-    //public TextMeshProUGUI selectItemStatName;
-    //public TextMeshProUGUI selectItemStatValue;
     public GameObject useButton;
     public GameObject equipButton;
     public GameObject unEquipButton;
     public GameObject dropButton;
     public GameObject itemSlotClickImage;
 
+    // 아이템 풀
     [Header("Item Pool")]
     public List<Item> equipmentItemPool;
     public GameObject randomEquipItemButton;
@@ -37,14 +35,9 @@ public class UIInventory : MonoBehaviour
         InitInventoryUI();
     }
 
+    // 인벤토리 기초설정
     public void InitInventoryUI()
     {
-        // 아이템 창 띄울 정보
-        //selectItemIcon = transform.Find("InfoBG/InfoIcon").GetComponent<Image>();
-        //selectItemName = transform.Find("InfoBG/ItemName").GetComponent<TextMeshProUGUI>();
-        //selectItemDescription = transform.Find("InfoBG/Description").GetComponent<TextMeshProUGUI>();
-        //selectItemStatName = transform.Find("InfoBG/StatName").GetComponent<TextMeshProUGUI>();
-        //selectItemStatValue = transform.Find("InfoBG/StatValue").GetComponent<TextMeshProUGUI>();
 
         slotPanel = transform.Find("Image/Scroll View/Viewport/Slots").transform;
         itemSlotClickImage = transform.Find("ItemSlotClickImage").gameObject;
@@ -70,6 +63,7 @@ public class UIInventory : MonoBehaviour
 
     }
 
+    // 아이템 추가
     public void AddItem(Item item, int quantity)
     {
 
@@ -100,7 +94,7 @@ public class UIInventory : MonoBehaviour
 
     }
 
-
+    // 사용 아이템 버튼
     public void OnUseButton()
     {
 
@@ -119,6 +113,8 @@ public class UIInventory : MonoBehaviour
         itemSlotClickImage.SetActive(false);
     }
 
+
+    // 장착 아이템 버튼
     public void OnEquipButton()
     {
         // 같은 아이템 타입인지 확인 후 같다면 해당 아이템을 착용하고 기존에 있던 아이템의 장착을 해제
@@ -133,6 +129,8 @@ public class UIInventory : MonoBehaviour
 
     }
 
+
+    //장착 해제 아이템 버튼
     public void OnUnEquipButton()
     {
         UnEquip();
@@ -154,6 +152,7 @@ public class UIInventory : MonoBehaviour
         }
     }
 
+    // 장착 해제
     void UnEquip()
     {
         selectItem.equipped = false;
@@ -163,7 +162,7 @@ public class UIInventory : MonoBehaviour
         UpdateUI();
     }
 
-
+    // 비어있는 슬롯을 찾고 만약 비어있는 슬롯이 없다면 슬롯을 생성
     public Slot GetEmptySlot()
     {
         Slot availableSlot = slots.Find(slot => !slot.gameObject.activeSelf);
@@ -191,6 +190,7 @@ public class UIInventory : MonoBehaviour
         return null;
     }
 
+    // UI업데이트
     public void UpdateUI()
 
     {
@@ -209,6 +209,7 @@ public class UIInventory : MonoBehaviour
         //아이템 설명창
     }
 
+    // 아이템 갯수를 중첩시키는 메서드
     public Slot GetItemStack(Item data)
     {
         for (int i = 0; i < slots.Count; i++)
@@ -221,6 +222,7 @@ public class UIInventory : MonoBehaviour
         return null;
     }
 
+    // 선택한 아이템(마우스로 슬롯을 클릭한 곳)
     public void SelectItem(int index)
     {
         Slot sSlot;
@@ -238,14 +240,11 @@ public class UIInventory : MonoBehaviour
 
     }
 
+    // 선택한 아이템창 정보 초기화
     public void ClearSelectItemWindow()
     {
         selectItem = null;
 
-        //selectItemName.text = string.Empty;
-        //selectItemDescription.text = string.Empty;
-        //selectItemStatName.text = string.Empty;
-        //selectItemStatValue.text = string.Empty;
 
         useButton.SetActive(false);
         equipButton.SetActive(false);
@@ -253,6 +252,7 @@ public class UIInventory : MonoBehaviour
         dropButton.SetActive(false);
     }
 
+    // 아이템 제거
     void RemoveSelectItem()
     {
         slots[selectItem.index].quantity--;

@@ -71,7 +71,8 @@ public class Item : ScriptableObject
     [Header("EquipType")]
     public ItemEquipData itemEquipData;
 
-    public Item(string itemName, string itemDescription, Sprite icon, ItemType type, bool canStack, int maxStackAmount, ItemConsumable[] consumables, ItemEquipData itemEquipData)
+    public Item(string itemName, string itemDescription, Sprite icon, ItemType type, bool canStack, int maxStackAmount, 
+        ItemConsumable[] consumables, ItemEquipData itemEquipData)
     {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
